@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine
 
 RUN apk add py2-pip && \
     pip install --upgrade pip && \
@@ -6,8 +6,6 @@ RUN apk add py2-pip && \
     mkdir -p /usr/local/bin/curator/config && mkdir -p /usr/local/bin/curator/action
 
 COPY entrypoint.sh ./entrypoint
-COPY curator.sh /usr/local/bin/curator
-
-RUN chmod -R 777 /usr/local/bin/curator && chmod -R +x /usr/local/bin/curator
+COPY curator.sh ./curator
 
 CMD ./entrypoint
