@@ -1,0 +1,20 @@
+actions:
+ 1:
+    action: delete_indices
+    description: Delete monitoring indices older than 1 day
+    options:
+      ignore_empty_list: True
+      timeout_override: 300
+      continue_if_exception: True
+      disable_action: False
+    filters:
+    - filtertype: pattern
+      kind: regex
+      value: '.*monitoring.*'
+      exclude:
+    - filtertype: age
+      source: creation_date
+      direction: older
+      unit: days
+      unit_count: 1
+      exclude:

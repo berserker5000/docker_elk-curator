@@ -1,0 +1,111 @@
+version: '3.4'
+services:
+ qdd:
+  image: berserker5000/curator
+  volumes:
+   - type: volume
+     source: qdd
+     target: /usr/local/bin/curator/
+  environment:
+   CRON_SCHEDULE: "*/30 * * * *"
+
+ qdd_capacity:
+  image: berserker5000/curator
+  volumes:
+   - type: volume
+     source: qdd_capacity
+     target: /usr/local/bin/curator/
+  environment:
+   CRON_SCHEDULE: "*/30 * * * *"
+
+ autoqa:
+  image: berserker5000/curator
+  volumes:
+   - type: volume
+     source: autoqa
+     target: /usr/local/bin/curator/
+  environment:
+   CRON_SCHEDULE: "*/30 * * * *"
+  deploy:
+      placement:
+        constraints: [node.role == worker]
+
+ dev:
+  image: berserker5000/curator
+  volumes:
+   - type: volume
+     source: dev
+     target: /usr/local/bin/curator/
+  environment:
+   CRON_SCHEDULE: "*/30 * * * *"
+  deploy:
+      placement:
+        constraints: [node.role == worker]
+
+ int:
+  image: berserker5000/curator
+  volumes:
+   - type: volume
+     source: int
+     target: /usr/local/bin/curator/
+  environment:
+   CRON_SCHEDULE: "*/30 * * * *"
+  deploy:
+      placement:
+        constraints: [node.role == worker]
+
+ preprod:
+  image: berserker5000/curator
+  volumes:
+   - type: volume
+     source: preprod
+     target: /usr/local/bin/curator/
+  environment:
+   CRON_SCHEDULE: "*/30 * * * *"
+  deploy:
+      placement:
+        constraints: [node.role == worker]
+
+
+volumes:
+ qdd:
+  driver: local
+  driver_opts:
+   type: "nfs"
+   o: addr=172.28.27.210,nolock,soft,rw,vers=4.0
+   device: :/mnt/Data/nfsshare/curator/qdd
+
+ qdd_capacity:
+  driver: local
+  driver_opts:
+   type: "nfs"
+   o: addr=172.28.27.210,nolock,soft,rw,vers=4.0
+   device: :/mnt/Data/nfsshare/curator/qdd_capacity
+
+ preprod:
+  driver: local
+  driver_opts:
+   type: "nfs"
+   o: addr=172.28.27.210,nolock,soft,rw,vers=4.0
+   device: :/mnt/Data/nfsshare/curator/preprod
+
+ int:
+  driver: local
+  driver_opts:
+   type: "nfs"
+   o: addr=172.28.27.210,nolock,soft,rw,vers=4.0
+   device: :/mnt/Data/nfsshare/curator/int
+
+ dev:
+  driver: local
+  driver_opts:
+   type: "nfs"
+   o: addr=172.28.27.210,nolock,soft,rw,vers=4.0
+   device: :/mnt/Data/nfsshare/curator/dev
+
+ autoqa:
+  driver: local
+  driver_opts:
+   type: "nfs"
+   o: addr=172.28.27.210,nolock,soft,rw,vers=4.0
+   device: :/mnt/Data/nfsshare/curator/autoqa
